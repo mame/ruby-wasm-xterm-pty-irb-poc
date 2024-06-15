@@ -93,19 +93,6 @@ ENV["TERM"] = "xterm-256color"
 
 require "irb"
 
-# Hack to avoid `IO.open(1, "w")`
-module IRB
-  class StdioInputMethod < InputMethod
-    def initialize
-      @line_no = 0
-      @line = []
-      @stdin = IO.open(STDIN.to_i, :external_encoding => IRB.conf[:LC_MESSAGES].encoding, :internal_encoding => "-")
-      # original: @stdout = IO.open(STDOUT.to_i, 'w', :external_encoding => IRB.conf[:LC_MESSAGES].encoding, :internal_encoding => "-")
-      @stdout = STDOUT
-    end
-  end
-end
-
 # Run irb
 IRB.setup(nil, argv: ['--no-pager'])
 IRB::Irb.new.run
