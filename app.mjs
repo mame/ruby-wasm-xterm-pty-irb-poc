@@ -144,7 +144,7 @@ const main = async () => {
   }));
 
   slave.onSignal((signal) => vm.eval(`Process.kill(:${signal}, $$)`));
-  
+
   const code = await fetch("main.rb");
   vm.evalAsync(await code.text());
 };

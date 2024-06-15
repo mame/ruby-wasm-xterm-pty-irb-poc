@@ -56,8 +56,7 @@ class IO
     end
   end
 
-  def cooked(min: 1, time: 0, intr: false)
-    raise NotImplementedError if time != 0
+  def cooked
     begin
       old_termios = JSFuncs[:setCooked].apply()
       yield self
@@ -108,6 +107,5 @@ module IRB
 end
 
 # Run irb
-GC.disable # Hack to avoid "RuntimeError: null function or function signature mismatch"
 IRB.setup(nil, argv: ['--no-pager'])
 IRB::Irb.new.run
