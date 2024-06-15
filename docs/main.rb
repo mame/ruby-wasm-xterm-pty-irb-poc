@@ -1,14 +1,8 @@
 require "js"
 
 # Hack to ignore "require 'io/console'" and "require 'io/wait'"
-Dir.mkdir("/tmp")
-Dir.mkdir("/tmp/io")
-File.write("/tmp/io/console.rb", "")
-File.write("/tmp/io/wait.rb", "")
-$LOAD_PATH.unshift("/tmp")
-module Kernel
-  alias_method :require, :gem_original_require
-end
+$LOADED_FEATURES << "io/console" << "io/wait"
+Gem::Specification.find_by_name("reline").dependencies.clear
 
 # io shim
 class IO
